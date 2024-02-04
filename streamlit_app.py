@@ -1,6 +1,8 @@
 import streamlit as st
 import cv2
 import numpy as np
+import pandas as pd
+from io import StringIO
 from keras.models import load_model
 
 # Import the class labels from labels.txt and assign to a list
@@ -10,10 +12,8 @@ model = load_model('keras_model.h5', compile = False)
 
 # Create the streamlit Title and camera_input
 st.title(f'Is it {classes[0]} or {classes[1]}!?')
-img_file_buffer = st.camera_input(f"Take a picture of {classes[0]} or {classes[1]}")
 
-
-# Trigger when a photo has been taken and the bugger is no longer None
+img_file_buffer = st.file_uploader("Choose a file")
 if img_file_buffer is not None:
     # Get the image and process it as required by the model
     # We are reshaping and converting the image to match the input the model requires.
